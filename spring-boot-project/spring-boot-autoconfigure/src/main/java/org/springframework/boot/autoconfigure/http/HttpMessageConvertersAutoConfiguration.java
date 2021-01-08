@@ -54,10 +54,14 @@ import org.springframework.http.converter.StringHttpMessageConverter;
  * @author Eddú Meléndez
  * @since 2.0.0
  */
+//标识配置类相当于xml中的bean标签
 @Configuration(proxyBeanMethods = false)
+//判断是否存在HttpMessageConverter.class类，仅当指定的类在类路径上时才匹配
 @ConditionalOnClass(HttpMessageConverter.class)
 @Conditional(NotReactiveWebApplicationCondition.class)
+//在这三个配置类配置之后再进行配置
 @AutoConfigureAfter({ GsonAutoConfiguration.class, JacksonAutoConfiguration.class, JsonbAutoConfiguration.class })
+//导入配置类相当于xml中的 import标签
 @Import({ JacksonHttpMessageConvertersConfiguration.class, GsonHttpMessageConvertersConfiguration.class,
 		JsonbHttpMessageConvertersConfiguration.class })
 public class HttpMessageConvertersAutoConfiguration {

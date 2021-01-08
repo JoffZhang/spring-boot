@@ -32,7 +32,7 @@ import org.springframework.util.StringUtils;
  * @author Phillip Webb
  */
 final class AutoConfigurationMetadataLoader {
-
+	//文件中为需要加载的配置类的类路径
 	protected static final String PATH = "META-INF/spring-autoconfigure-metadata.properties";
 
 	private AutoConfigurationMetadataLoader() {
@@ -44,12 +44,15 @@ final class AutoConfigurationMetadataLoader {
 
 	static AutoConfigurationMetadata loadMetadata(ClassLoader classLoader, String path) {
 		try {
+			//读取spring-boot-autoconfigure-*.RELEASE.jar包中spring-autoconfigure-metadata.properties的信息生成urls枚举对象
 			Enumeration<URL> urls = (classLoader != null) ? classLoader.getResources(path)
 					: ClassLoader.getSystemResources(path);
 			Properties properties = new Properties();
+			//解析urls枚举对象中的信息封装成properties对象并加载
 			while (urls.hasMoreElements()) {
 				properties.putAll(PropertiesLoaderUtils.loadProperties(new UrlResource(urls.nextElement())));
 			}
+			//根据封装好的properties对象生成AutoConfigurationMetadata对象返回
 			return loadMetadata(properties);
 		}
 		catch (IOException ex) {

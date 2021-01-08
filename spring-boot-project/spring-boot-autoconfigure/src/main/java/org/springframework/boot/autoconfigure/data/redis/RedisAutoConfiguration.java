@@ -43,14 +43,14 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  * @author Mark Paluch
  * @since 1.0.0
  */
-@Configuration(proxyBeanMethods = false)
-@ConditionalOnClass(RedisOperations.class)
-@EnableConfigurationProperties(RedisProperties.class)
-@Import({ LettuceConnectionConfiguration.class, JedisConnectionConfiguration.class })
+@Configuration(proxyBeanMethods = false)		//告诉springboot这是个配置类
+@ConditionalOnClass(RedisOperations.class)		//当前类路径下有指定类的条件下才会实例化
+@EnableConfigurationProperties(RedisProperties.class)//声明开启属性注入 可以设置属性
+@Import({ LettuceConnectionConfiguration.class, JedisConnectionConfiguration.class })//导入另外redis相关的配置类
 public class RedisAutoConfiguration {
 
 	@Bean
-	@ConditionalOnMissingBean(name = "redisTemplate")
+	@ConditionalOnMissingBean(name = "redisTemplate")//当路径下不存在指定类的条件下
 	@ConditionalOnSingleCandidate(RedisConnectionFactory.class)
 	public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
 		RedisTemplate<Object, Object> template = new RedisTemplate<>();
@@ -59,7 +59,7 @@ public class RedisAutoConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean	//当类路径下不存在指定类的条件下
 	@ConditionalOnSingleCandidate(RedisConnectionFactory.class)
 	public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
 		StringRedisTemplate template = new StringRedisTemplate();

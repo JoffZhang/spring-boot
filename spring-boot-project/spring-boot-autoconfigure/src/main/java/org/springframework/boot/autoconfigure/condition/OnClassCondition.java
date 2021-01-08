@@ -49,6 +49,7 @@ class OnClassCondition extends FilteringSpringBootCondition {
 		// Split the work and perform half in a background thread if more than one
 		// processor is available. Using a single additional thread seems to offer the
 		// best performance. More threads make things worse.
+		//提高效率，判断如果有多个处理器，拆分工作并在后台线程中执行一半。 使用单个附加线程似乎提供最佳性能。更多线程会使情况变得更糟。
 		if (autoConfigurationClasses.length > 1 && Runtime.getRuntime().availableProcessors() > 1) {
 			return resolveOutcomesThreaded(autoConfigurationClasses, autoConfigurationMetadata);
 		}
@@ -66,7 +67,9 @@ class OnClassCondition extends FilteringSpringBootCondition {
 				autoConfigurationMetadata);
 		OutcomesResolver secondHalfResolver = new StandardOutcomesResolver(autoConfigurationClasses, split,
 				autoConfigurationClasses.length, autoConfigurationMetadata, getBeanClassLoader());
+		//解析后半部分候选者
 		ConditionOutcome[] secondHalf = secondHalfResolver.resolveOutcomes();
+		//解析前半部分候选者
 		ConditionOutcome[] firstHalf = firstHalfResolver.resolveOutcomes();
 		ConditionOutcome[] outcomes = new ConditionOutcome[autoConfigurationClasses.length];
 		System.arraycopy(firstHalf, 0, outcomes, 0, firstHalf.length);
@@ -224,7 +227,10 @@ class OnClassCondition extends FilteringSpringBootCondition {
 		}
 
 		private ConditionOutcome getOutcome(String className, ClassLoader classLoader) {
+			//ClassNameFilter.MISSING主要通过Class.forName校验类是否存在
 			if (ClassNameFilter.MISSING.matches(className, classLoader)) {
+				//这个方法主要意思是properties中xxx.ConditionalOnClass=value类不存在，
+				// 则返回一个”required class不存在”的ConditionOutcome(候选的自动装配类会被忽略)，否则返回null（候选的自动装配类会被加载）
 				return ConditionOutcome.noMatch(ConditionMessage.forCondition(ConditionalOnClass.class)
 						.didNotFind("required class").items(Style.QUOTE, className));
 			}

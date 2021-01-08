@@ -42,7 +42,7 @@ abstract class FilteringSpringBootCondition extends SpringBootCondition
 	private BeanFactory beanFactory;
 
 	private ClassLoader beanClassLoader;
-
+	//主要是调用子类的getOutcomes方法返回一个ConditionOutcome数组，代表每一个候选自动装配类是否该被忽略
 	@Override
 	public boolean[] match(String[] autoConfigurationClasses, AutoConfigurationMetadata autoConfigurationMetadata) {
 		ConditionEvaluationReport report = ConditionEvaluationReport.find(this.beanFactory);

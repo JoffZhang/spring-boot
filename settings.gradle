@@ -1,5 +1,7 @@
 pluginManagement {
 	repositories {
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+		maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
 		mavenCentral()
 		gradlePluginPortal()
 		maven {
@@ -81,3 +83,8 @@ file("${rootDir}/spring-boot-project/spring-boot-starters").eachDirMatch(~/sprin
 file("${rootDir}/spring-boot-tests/spring-boot-smoke-tests").eachDirMatch(~/spring-boot-smoke-test.*/) {
 	include "spring-boot-tests:spring-boot-smoke-tests:${it.name}"
 }
+
+include 'Study-SpringBoot:Study-Spring-Boot'
+include 'Study-SpringBoot:CustomRealizeAutoConfiguration'
+findProject(':Study-SpringBoot:CustomRealizeAutoConfiguration')?.name = 'CustomRealizeAutoConfiguration'
+

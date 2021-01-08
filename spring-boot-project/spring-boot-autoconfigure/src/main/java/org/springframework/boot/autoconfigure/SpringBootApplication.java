@@ -59,6 +59,7 @@ import org.springframework.data.repository.Repository;
 public @interface SpringBootApplication {
 
 	/**
+	 * 排除特定的自动配置类，使其永远不会应用。classes形式
 	 * Exclude specific auto-configuration classes such that they will never be applied.
 	 * @return the classes to exclude
 	 */
@@ -66,6 +67,7 @@ public @interface SpringBootApplication {
 	Class<?>[] exclude() default {};
 
 	/**
+	 * 排除不会被应用的自动配置类，字符串数组形式
 	 * Exclude specific auto-configuration class names such that they will never be
 	 * applied.
 	 * @return the class names to exclude
@@ -75,6 +77,7 @@ public @interface SpringBootApplication {
 	String[] excludeName() default {};
 
 	/**
+	 * 扫描基本包
 	 * Base packages to scan for annotated components. Use {@link #scanBasePackageClasses}
 	 * for a type-safe alternative to String-based package names.
 	 * <p>
@@ -90,6 +93,7 @@ public @interface SpringBootApplication {
 	String[] scanBasePackages() default {};
 
 	/**
+	 * 扫描基本类
 	 * Type-safe alternative to {@link #scanBasePackages} for specifying the packages to
 	 * scan for annotated components. The package of each class specified will be scanned.
 	 * <p>

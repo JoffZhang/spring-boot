@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.joffzhang.httpclient.HttpClientAutoConfiguration
+#此处记得一定要配置HttpClientAutoConfiguration类所在包路径
