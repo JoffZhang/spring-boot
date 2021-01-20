@@ -48,7 +48,7 @@ class SpringApplicationRunListeners {
 		this.listeners = new ArrayList<>(listeners);
 		this.applicationStartup = applicationStartup;
 	}
-
+	// 在run()方法开始执行时，该方法就立即被调用，可用于在初始化最早期时做一些工作
 	void starting(ConfigurableBootstrapContext bootstrapContext, Class<?> mainApplicationClass) {
 		doWithListeners("spring.boot.application.starting", (listener) -> listener.starting(bootstrapContext),
 				(step) -> {
@@ -57,28 +57,28 @@ class SpringApplicationRunListeners {
 					}
 				});
 	}
-
+	// 当environment构建完成，ApplicationContext创建之前，该方法被调用
 	void environmentPrepared(ConfigurableBootstrapContext bootstrapContext, ConfigurableEnvironment environment) {
 		doWithListeners("spring.boot.application.environment-prepared",
 				(listener) -> listener.environmentPrepared(bootstrapContext, environment));
 	}
-
+	// 当ApplicationContext构建完成时，该方法被调用
 	void contextPrepared(ConfigurableApplicationContext context) {
 		doWithListeners("spring.boot.application.context-prepared", (listener) -> listener.contextPrepared(context));
 	}
-
+	// 在ApplicationContext完成加载，但没有被刷新前，该方法被调用
 	void contextLoaded(ConfigurableApplicationContext context) {
 		doWithListeners("spring.boot.application.context-loaded", (listener) -> listener.contextLoaded(context));
 	}
-
+	// 在ApplicationContext刷新并启动后，CommandLineRunners和ApplicationRunner未被调用前，该方法被调用
 	void started(ConfigurableApplicationContext context) {
 		doWithListeners("spring.boot.application.started", (listener) -> listener.started(context));
 	}
-
+	// 在run()方法执行完成前该方法被调用
 	void running(ConfigurableApplicationContext context) {
 		doWithListeners("spring.boot.application.running", (listener) -> listener.running(context));
 	}
-
+	// 当应用运行出错时该方法被调用
 	void failed(ConfigurableApplicationContext context, Throwable exception) {
 		doWithListeners("spring.boot.application.failed",
 				(listener) -> callFailedListener(listener, context, exception), (step) -> {

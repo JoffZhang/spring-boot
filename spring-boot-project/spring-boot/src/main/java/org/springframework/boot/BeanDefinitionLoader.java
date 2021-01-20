@@ -164,7 +164,7 @@ class BeanDefinitionLoader {
 			GroovyBeanDefinitionSource loader = BeanUtils.instantiateClass(source, GroovyBeanDefinitionSource.class);
 			((GroovyBeanDefinitionReader) this.groovyReader).beans(loader.getBeans());
 		}
-		if (isEligible(source)) {
+		if (isEligible(source)) {//以注解的方式，将启动类bean信息存入beanDefinitionMap
 			this.annotatedReader.register(source);
 		}
 	}

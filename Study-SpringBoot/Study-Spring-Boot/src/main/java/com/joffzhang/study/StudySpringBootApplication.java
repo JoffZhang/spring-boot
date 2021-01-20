@@ -9,8 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class StudySpringBootApplication {
+	private static final String[] ARGS = new String[] { "--foo=bar", "--foo=baz", "--debug", "spring", "boot","a=b" };
 
 	public static void main(String[] args) {
-		SpringApplication.run(StudySpringBootApplication.class,args);
+		SpringApplication.run(StudySpringBootApplication.class,ARGS);
+		//SpringApplication.run(StudySpringBootApplication.class,args);
 	}
 }
